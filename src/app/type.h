@@ -10,6 +10,11 @@
 
 /* configuration */
 
+// Continuous mode, not recommended
+// #define _TX_C  1
+// #define _RX_C  1 
+
+
 #define PCB_V2
 
 #define SOFT_TIMER_LED  0

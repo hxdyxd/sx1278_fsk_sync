@@ -1327,6 +1327,8 @@ typedef struct sSX1276
 
 extern tSX1276* SX1276;
 
+
+void SX1276FskInit_Debug( void );
 /*!
  * \brief Initializes the SX1276
  */

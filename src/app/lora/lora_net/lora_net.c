@@ -9,12 +9,27 @@ uint16_t gu16_lora_size = 0;
 
 int lora_net_init(void)
 {
+#if _RX_C
+    //Continuous mode
+    SX1276FskInit_Debug();
+    SX1276FskSetOpMode( RF_OPMODE_RECEIVER );
+#elif _TX_C
+    //Continuous mode
+    SX1276FskInit_Debug();
+    SX1276FskSetOpMode( RF_OPMODE_TRANSMITTER );
+#else
+    //Packet mode
     SX1276FskInit();
     SX1276FskStartRx();
+#endif
     return 0;
 }
 
+#if (_RX_C || _TX_C)
+//Continuous mode
 
+#else
+//Packet mode
 void lora_net_proc( void ( *user_func)(uint8_t *buf, uint16_t len))
 {
     uint32_t stat;
@@ -52,7 +67,7 @@ int lora_net_write_no_block(uint8_t *buffer, uint16_t len)
     SX1276FskSetTxPacket(buffer, len);
     return len;
 }
-
+#endif
 
 void lora_net_debug_hex(uint8_t *p, uint8_t len, uint8_t lf)
 {
